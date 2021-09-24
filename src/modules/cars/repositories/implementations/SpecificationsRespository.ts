@@ -1,46 +1,37 @@
+import { getRepository, Repository } from 'typeorm';
+
 import ICreateSpecificationDTO from '../../dtos/ICreateSpecificationDTO';
 import { Specification } from '../../entities/Specification';
 import { ISpecificationsRespository } from '../ISpecificationsRespository';
 
 class SpecificationsRespository implements ISpecificationsRespository {
-  private specifications: Specification[];
+  private repository: Repository<Specification>;
 
-  private static INSTANCE: SpecificationsRespository;
-
-  private constructor() {
-    this.specifications = [];
+  constructor() {
+    this.repository = getRepository(Specification);
   }
 
-  public static getInstance(): SpecificationsRespository {
-    if (!SpecificationsRespository.INSTANCE) {
-      SpecificationsRespository.INSTANCE = new SpecificationsRespository();
-    }
+  public async create({
+    name,
+    description,
+  }: ICreateSpecificationDTO): Promise<Specification> {
+    const specification = this.repository.create({ name, description });
 
-    return SpecificationsRespository.INSTANCE;
-  }
-
-  public create({ name, description }: ICreateSpecificationDTO): Specification {
-    const specification = new Specification();
-
-    Object.assign(specification, {
-      name,
-      description,
-      create_at: new Date(),
-    });
-
-    this.specifications.push(specification);
+    await this.repository.save(specification);
 
     return specification;
   }
 
-  public list(): Specification[] {
-    return this.specifications;
+  public async list(): Promise<Specification[]> {
+    const specifications = await this.repository.find();
+
+    return specifications;
   }
 
-  public findByName(name: string): Specification | undefined {
-    const checkSpecificationNameExists = this.specifications.find(
-      specification => specification.name === name,
-    );
+  public async findByName(name: string): Promise<Specification | undefined> {
+    const checkSpecificationNameExists = this.repository.findOne({
+      where: { name },
+    });
 
     return checkSpecificationNameExists;
   }
