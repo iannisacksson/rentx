@@ -32,17 +32,23 @@ class UsersRepository implements IUsersRepository {
     name,
     password,
     driverLicense,
+    filename,
   }: ICreateUserDTO): Promise<User> {
     const user = this.repository.create({
       name,
       email,
       password,
       driver_license: driverLicense,
+      avatar: filename,
     });
 
     await this.repository.save(user);
 
     return user;
+  }
+
+  public async save(user: User): Promise<User> {
+    return this.repository.save(user);
   }
 }
 

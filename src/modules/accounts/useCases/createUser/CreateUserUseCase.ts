@@ -18,6 +18,7 @@ class CreateUserUseCase {
     password,
     name,
     email,
+    filename,
   }: ICreateUserDTO): Promise<User> {
     const userExist = this.usersRepository.findByEmail(email);
 
@@ -32,6 +33,7 @@ class CreateUserUseCase {
       password: passwordHash,
       name,
       email,
+      filename,
     });
 
     return user;
