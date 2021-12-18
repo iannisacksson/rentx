@@ -3,4 +3,4 @@ interface ICreateCategoryDTO {
   description: string;
 }
 
-export default ICreateCategoryDTO;
+export { ICreateCategoryDTO };
