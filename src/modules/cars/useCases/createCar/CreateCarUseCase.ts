@@ -56,6 +56,7 @@ class CreateCarUseCase {
       name,
       fineAmount,
       licensePlate,
+      specifications: [],
     });
 
     return car;

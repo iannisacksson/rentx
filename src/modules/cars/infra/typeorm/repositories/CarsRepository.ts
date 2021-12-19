@@ -35,6 +35,10 @@ class CarsRepository implements ICarsRepository {
     return car;
   }
 
+  public async save(car: Car): Promise<Car> {
+    return this.repository.save(car);
+  }
+
   public async findByLicensePlate(licensePlate: string): Promise<Car> {
     const car = await this.repository.findOne({
       where: { license_plate: licensePlate },
@@ -67,6 +71,14 @@ class CarsRepository implements ICarsRepository {
     const cars = await carsQuery.getMany();
 
     return cars;
+  }
+
+  public async findById(id: string): Promise<Car> {
+    const car = await this.repository.findOne({
+      where: { id },
+    });
+
+    return car;
   }
 }
 

@@ -35,6 +35,12 @@ class SpecificationsRespository implements ISpecificationsRespository {
 
     return checkSpecificationNameExists;
   }
+
+  public async findByIds(ids: string[]): Promise<Specification[]> {
+    const checkSpecificationNameExists = this.repository.findByIds(ids);
+
+    return checkSpecificationNameExists;
+  }
 }
 
 export { SpecificationsRespository };

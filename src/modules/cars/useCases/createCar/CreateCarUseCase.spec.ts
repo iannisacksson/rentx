@@ -62,6 +62,7 @@ describe('Create Car', () => {
       fineAmount: 60,
       licensePlate: 'ABC-1234',
       name: 'Name car',
+      specifications: [],
     });
 
     const response = createCarUseCase.execute({

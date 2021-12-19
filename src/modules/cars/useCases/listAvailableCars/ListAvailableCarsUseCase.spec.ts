@@ -25,6 +25,7 @@ describe('List Cars', () => {
       fineAmount: 60,
       licensePlate: 'ABC-1234',
       name: 'Name car',
+      specifications: [],
     });
 
     const cars = await listAvailableCarsUseCase.execute({});
@@ -41,6 +42,7 @@ describe('List Cars', () => {
       fineAmount: 60,
       licensePlate: 'ABC-1234',
       name: 'Name car',
+      specifications: [],
     });
 
     const cars = await listAvailableCarsUseCase.execute({
@@ -59,6 +61,7 @@ describe('List Cars', () => {
       fineAmount: 60,
       licensePlate: 'ABC-1234',
       name: 'Name car',
+      specifications: [],
     });
 
     const cars = await listAvailableCarsUseCase.execute({
@@ -79,6 +82,7 @@ describe('List Cars', () => {
       fineAmount: 60,
       licensePlate: 'ABC-1234',
       name: 'Name car',
+      specifications: [],
     });
 
     const cars = await listAvailableCarsUseCase.execute({

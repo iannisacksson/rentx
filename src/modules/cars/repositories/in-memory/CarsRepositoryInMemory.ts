@@ -4,6 +4,10 @@ import { ICreateCarDTO } from '../../dtos/ICreateCarDTO';
 import { ICarsRepository } from '../ICarsRepository';
 
 class CarsRepositoryInMemory implements ICarsRepository {
+  public async findById(id: string): Promise<Car> {
+    return this.cars.find(findCar => findCar.id === id);
+  }
+
   public async findAvailable(
     brand?: string,
     categoryId?: string,
@@ -33,6 +37,7 @@ class CarsRepositoryInMemory implements ICarsRepository {
     fineAmount,
     licensePlate,
     name,
+    specifications,
   }: ICreateCarDTO): Promise<Car> {
     const car = new Car();
 
@@ -44,9 +49,18 @@ class CarsRepositoryInMemory implements ICarsRepository {
       fine_amount: fineAmount,
       license_plate: licensePlate,
       name,
+      specifications,
     });
 
     this.cars.push(car);
+
+    return car;
+  }
+
+  public async save(car: Car): Promise<Car> {
+    const carIndex = this.cars.findIndex(findCar => findCar.id === car.id);
+
+    this.cars[carIndex] = car;
 
     return car;
   }
