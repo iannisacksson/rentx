@@ -5,6 +5,12 @@ import { ICategoriesRepository } from '../ICategoriesRepository';
 class CategoriesRepositoryInMemory implements ICategoriesRepository {
   private categories: Category[] = [];
 
+  public async findById(id: string): Promise<Category> {
+    const category = this.categories.find(category => category.id === id);
+
+    return category;
+  }
+
   public async findByName(name: string): Promise<Category> {
     const category = this.categories.find(category => category.name === name);
 

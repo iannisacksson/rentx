@@ -28,8 +28,16 @@ class CategoriesRepository implements ICategoriesRepository {
     return categories;
   }
 
-  public findByName(name: string): Promise<Category | undefined> {
-    const checkCategoryNameExists = this.repository.findOne({
+  public async findById(id: string): Promise<Category> {
+    const category = await this.repository.findOne({
+      where: { id },
+    });
+
+    return category;
+  }
+
+  public async findByName(name: string): Promise<Category | undefined> {
+    const checkCategoryNameExists = await this.repository.findOne({
       where: { name },
     });
 
