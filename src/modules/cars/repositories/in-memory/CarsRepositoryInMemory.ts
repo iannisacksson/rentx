@@ -4,6 +4,8 @@ import { ICreateCarDTO } from '../../dtos/ICreateCarDTO';
 import { ICarsRepository } from '../ICarsRepository';
 
 class CarsRepositoryInMemory implements ICarsRepository {
+  private cars: Car[] = [];
+
   public async findById(id: string): Promise<Car> {
     return this.cars.find(findCar => findCar.id === id);
   }
@@ -26,8 +28,6 @@ class CarsRepositoryInMemory implements ICarsRepository {
   public async findByLicensePlate(licensePlate: string): Promise<Car> {
     return this.cars.find(findCar => findCar.license_plate === licensePlate);
   }
-
-  private cars: Car[] = [];
 
   public async create({
     brand,
@@ -63,6 +63,12 @@ class CarsRepositoryInMemory implements ICarsRepository {
     this.cars[carIndex] = car;
 
     return car;
+  }
+
+  public async updateAvailable(id: string, available: boolean): Promise<void> {
+    const carIndex = this.cars.findIndex(car => car.id === id);
+
+    this.cars[carIndex].available = available;
   }
 }
 
