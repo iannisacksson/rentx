@@ -6,6 +6,14 @@ import { IRentalsRepository } from '../IRentalsRepository';
 class RentalsRepositoryInMemory implements IRentalsRepository {
   private rentals: Rental[] = [];
 
+  public async findById(id: string): Promise<Rental> {
+    return this.rentals.find(rental => rental.id === id);
+  }
+
+  public async findByUserId(id: string): Promise<Rental[]> {
+    return this.rentals.filter(rental => rental.user_id === id);
+  }
+
   public async findOpenRentalByCar(carId: string): Promise<Rental> {
     return this.rentals.find(
       rental => rental.car_id === carId && !rental.end_date,
@@ -35,6 +43,14 @@ class RentalsRepositoryInMemory implements IRentalsRepository {
     this.rentals.push(rental);
 
     return rental;
+  }
+
+  public async save(data: Rental): Promise<Rental> {
+    const rentalIndex = this.rentals.findIndex(item => item.id === data.id);
+
+    this.rentals[rentalIndex] = data;
+
+    return data;
   }
 }
 
