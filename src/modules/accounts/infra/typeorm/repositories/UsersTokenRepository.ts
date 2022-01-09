@@ -11,6 +11,14 @@ class UsersTokenRepository implements IUsersTokenRepository {
     this.repository = getRepository(UserToken);
   }
 
+  public async findByRefreshToken(refreshToken: string): Promise<UserToken> {
+    const userToken = this.repository.findOne({
+      where: { refresh_token: refreshToken },
+    });
+
+    return userToken;
+  }
+
   public async findByUserIdAndRefreshToken(
     id: string,
     refreshToken: string,
