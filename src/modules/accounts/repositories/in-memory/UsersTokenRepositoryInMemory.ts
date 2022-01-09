@@ -22,6 +22,25 @@ class UsersTokenRepositoryInMemory implements IUsersTokenRepository {
 
     return userToken;
   }
+
+  public async findByRefreshToken(refreshToken: string): Promise<UserToken> {
+    return this.usersToken.find(token => token.refresh_token === refreshToken);
+  }
+
+  public async findByUserIdAndRefreshToken(
+    userId: string,
+    refreshToken: string,
+  ): Promise<UserToken> {
+    return this.usersToken.find(
+      token => token.refresh_token === refreshToken && token.user_id === userId,
+    );
+  }
+
+  public async deleteById(id: string): Promise<void> {
+    const findIndex = this.usersToken.findIndex(token => token.id === id);
+
+    this.usersToken.splice(findIndex, 1);
+  }
 }
 
 export { UsersTokenRepositoryInMemory };
