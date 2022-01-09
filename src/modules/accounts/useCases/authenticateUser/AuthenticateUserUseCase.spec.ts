@@ -43,7 +43,9 @@ describe('Create Category', () => {
       password: '123456',
     });
 
-    await expect(response).rejects.toBeInstanceOf(AppError);
+    await expect(response).rejects.toEqual(
+      new AppError('Email or password incorrect.'),
+    );
   });
 
   it('should not be able to authenticate user with incorrect password.', async () => {
@@ -60,6 +62,8 @@ describe('Create Category', () => {
       password: 'other-passoword',
     });
 
-    await expect(response).rejects.toBeInstanceOf(AppError);
+    await expect(response).rejects.toEqual(
+      new AppError('Email or password incorrect.'),
+    );
   });
 });

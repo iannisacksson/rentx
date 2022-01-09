@@ -36,6 +36,8 @@ describe('Create Category', () => {
       description: 'Category description test',
     });
 
-    await expect(response).rejects.toBeInstanceOf(AppError);
+    await expect(response).rejects.toEqual(
+      new AppError('Category already exists!'),
+    );
   });
 });

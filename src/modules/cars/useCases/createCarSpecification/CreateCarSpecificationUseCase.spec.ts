@@ -54,6 +54,6 @@ describe('Create Car Specification', () => {
       specificationsId: ['1234'],
     });
 
-    await expect(response).rejects.toBeInstanceOf(AppError);
+    await expect(response).rejects.toEqual(new AppError('Car does not exists'));
   });
 });

@@ -50,10 +50,17 @@ describe('Create Car', () => {
       name: 'Name car',
     });
 
-    await expect(response).rejects.toBeInstanceOf(AppError);
+    await expect(response).rejects.toEqual(
+      new AppError('Category does not exist', 404),
+    );
   });
 
   it('should not be able to create a car with exists license plate.', async () => {
+    const category = await categoriesRepositoryInMemory.create({
+      description: 'Test',
+      name: 'Test',
+    });
+
     await carsRepositoryInMemory.create({
       brand: 'brand',
       categoryId: 'catgory id',
@@ -67,7 +74,7 @@ describe('Create Car', () => {
 
     const response = createCarUseCase.execute({
       brand: 'brand',
-      categoryId: 'catgory id',
+      categoryId: category.id,
       dailyRate: 100,
       description: 'Description car',
       fineAmount: 60,
@@ -75,6 +82,6 @@ describe('Create Car', () => {
       name: 'Name car',
     });
 
-    await expect(response).rejects.toBeInstanceOf(AppError);
+    await expect(response).rejects.toEqual(new AppError('Car already exists'));
   });
 });
